@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+#  
+  SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+#  echo $SCRIPT_DIR;
+  
+  source $SCRIPT_DIR/4cp.globals.inc.sh
+
+  source $SCRIPT_DIR/4cp.binddir.inc.sh
+#  source $SCRIPT_DIR/4cp.cmdopt.inc.sh
+  source $SCRIPT_DIR/4cp.compile.inc.sh
+  source $SCRIPT_DIR/4cp.help.inc.sh
+  source $SCRIPT_DIR/4cp.misc.inc.sh
+  source $SCRIPT_DIR/4cp.od.inc.sh
+  source $SCRIPT_DIR/4cp.sp.inc.sh
+#
+# Process Command Line Options
+#
+  while getopts "$optspec" optchar; do
+    commandLineOptionsProcess
+  done
+  runLog "************************** Start ***"
+#
+# Setup globals
+#
+  globalsSet
+
+  if [ "$wCompile" = "Y" ]; then 
+    setCompileCommand oCompileCommand
+  else
+    setUploadCommand
+  fi
+#
+# Display debug screen
+#      
+  dspDebug
+  runLog $(dspDebug)
+  
+  dspCompileOptions
+  runLog $(dspCompileOptions)
+
+  #
+  # The command will now run.
+  #
+  if [ -z $wTestOnly ]; then # If $wTestOnly empty compile
+#
+# Runs compile comamand that was set.
+#  
+    runSystemCommand
+    
+    eval "tail -n4 $oStdOutFile"
+    
+    checkForSuccesfullCompileByObjType
+
+#
+# Only show errors if compile failed.
+#
+    if [ -z "$ind_cfscbot" ]; then
+      echo $clr_lc
+#      eval "cat $oStdOutFile|grep *RNF"
+      writeCompileErrorFileSQL "$oLibrary" "$oObject" 
+      eval "cat $wCompileErrFile"
+      echo $clr_nc
+    else
+      afterSuccesfullCompile
+    fi
+      eval "cat $oStdErrFile"
+  else
+    echo " Test Only no compile."
+  fi  
+
+  runLog "************************** Stop  ***"

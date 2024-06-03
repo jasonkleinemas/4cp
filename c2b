@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#  
+#  SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+
+mkdir -p "$HOME/bin"
+
+cp src/4cp* "$HOME/bin/"
+
+echo "You may need to add the bin dir to your path."

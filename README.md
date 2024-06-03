@@ -25,7 +25,8 @@ The files _obj_desc.csv is for adding the description text to you obj.
 The format for each line is:
 
 filename.ext,Text
-# will comment out the line.
+
+\# will comment out the line.
 
 This file will need to be where you run the command from.
 

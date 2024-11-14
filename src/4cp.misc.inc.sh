@@ -25,7 +25,7 @@ function setSystemCommand () {
   
   oCompileCommand=$1
   local wt=$(echo "${oCompileCommand//[$'\t\r\n']}")
-  oSystemcommand="system -i \"${wt}\" >$oStdOutFile 2>$oStdErrFile ;"  
+  oSystemcommand="system -e -i \"${wt}\" >$oStdOutFile 2>$oStdErrFile ;"  
 }
 #
 #---------------------------------------------------------------------------------------

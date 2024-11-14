@@ -8,6 +8,7 @@
   source $SCRIPT_DIR/4cp.binddir.inc.sh
 #  source $SCRIPT_DIR/4cp.cmdopt.inc.sh
   source $SCRIPT_DIR/4cp.compile.inc.sh
+  source $SCRIPT_DIR/4cp.enviornment.inc.sh
   source $SCRIPT_DIR/4cp.help.inc.sh
   source $SCRIPT_DIR/4cp.misc.inc.sh
   source $SCRIPT_DIR/4cp.od.inc.sh
@@ -38,10 +39,14 @@
   dspCompileOptions
   runLog $(dspCompileOptions)
 
-  #
-  # The command will now run.
-  #
+#
+# The command will now run.
+#
   if [ -z $wTestOnly ]; then # If $wTestOnly empty compile
+#
+# Set enviornment varables for compile.
+#
+    setEnviornmentalVariables
 #
 # Runs compile comamand that was set.
 #  
